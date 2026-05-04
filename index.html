@@ -20,14 +20,15 @@
     --mono: 'IBM Plex Mono', monospace;
     --sans: 'IBM Plex Sans', sans-serif;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; color: inherit; }
   body {
     background: var(--bg);
-    color: var(--text);
+    color: #e2e8f0;
     font-family: var(--sans);
     min-height: 100vh;
     padding: 0 0 60px;
   }
+  input, button, span, label, p, div { color: inherit; }
   header {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -168,7 +169,7 @@
     font-family: var(--mono);
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--bg);
+    color: #f0fdf9;
     background: var(--accent);
     padding: 3px 9px;
     border-radius: 3px;
@@ -190,9 +191,7 @@
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 4px;
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 0.82rem;
+    color: #e2e8f0 !important;
     padding: 7px 10px;
     width: 100%;
     outline: none;
@@ -201,7 +200,7 @@
   input[type=number]:focus { border-color: var(--accent2); }
   .calc-btn {
     background: var(--accent);
-    color: var(--bg);
+    color: #f0fdf9;
     font-family: var(--mono);
     font-size: 0.78rem;
     font-weight: 600;
@@ -249,7 +248,7 @@
 <body>
 
 <header>
-  <h1>// EE_FORMULAS</h1>
+  <h1>EconCalc</h1>
   <button class="ref-btn" onclick="document.getElementById('refOverlay').classList.add('open')">📐 Formula Reference</button>
 </header>
 
