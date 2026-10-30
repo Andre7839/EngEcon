@@ -11,12 +11,12 @@
     --surface: #ffffff;
     --surface2:#e8eaed;
     --border:  #d0d5dd;
-    --accent:  #00a880;
-    --accent2: #2563eb;
-    --warn:    #d97706;
+    --accent:  #022851;
+    --accent2: #3b73b9;
+    --warn:    #FFBF00;
     --danger:  #dc2626;
     --text:    #1e2a38;
-    --muted:   #6b7280;
+    --muted:   #5b6677;
     --mono: 'IBM Plex Mono', monospace;
     --sans: 'IBM Plex Sans', sans-serif;
   }
@@ -30,8 +30,8 @@
     padding-bottom: 60px;
   }
   header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    background: #022851;
+    border-bottom: 3px solid #FFBF00;
     padding: 18px 36px;
     display: flex;
     align-items: center;
@@ -44,11 +44,11 @@
     font-family: var(--mono);
     font-size: 1.2rem;
     font-weight: 600;
-    color: var(--accent);
+    color: #FFBF00;
   }
   header sub {
     font-size: 0.8rem;
-    color: var(--muted);
+    color: #c9d4e5;
     font-family: var(--mono);
   }
   .tabs {
@@ -71,7 +71,7 @@
     transition: all 0.15s;
   }
   .tab-btn:hover  { color: var(--text); }
-  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-btn.active { color: var(--accent); font-weight: 600; border-bottom-color: #FFBF00; }
 
   /* grid */
   main {
@@ -112,14 +112,14 @@
     border-radius: 4px;
   }
   .badge.blue  { background: var(--accent2); }
-  .badge.amber { background: var(--warn); }
+  .badge.amber { background: var(--warn); color: #022851; }
   .card-title  { font-size: 0.88rem; font-weight: 600; color: var(--text); }
 
   /* card body: form left, diagram right */
   .card-body {
     padding: 16px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0,0.85fr) minmax(0,1.15fr);
     gap: 14px;
     align-items: start;
   }
@@ -188,11 +188,10 @@
     justify-content: center;
     padding: 8px 0;
   }
-  .diagram-side svg {
-    width: 100%;
-    height: auto;
-    max-width: 200px;
-  }
+  .cf { width: 100%; }
+  .cf svg { width: 100%; height: auto; display: block; }
+  .cf-note { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); text-align: center; margin-top: 2px; }
+  .cf-msg { font-family: var(--mono); font-size: 0.75rem; color: var(--danger); text-align: center; padding: 30px 0; }
   .diagram-legend {
     display: flex;
     gap: 10px;
@@ -213,6 +212,36 @@
     border-radius: 50%;
     flex-shrink: 0;
   }
+
+
+  /* examples */
+  .example {
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    padding: 14px 16px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .ex-title { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.04em; }
+  .example p { color: var(--text); }
+  .example b { font-weight: 600; }
+  .ex-ans { font-family: var(--mono); font-weight: 600; color: var(--accent); }
+  .ex-btn {
+    align-self: flex-start;
+    background: none;
+    border: 1px solid var(--accent2);
+    color: var(--accent2);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 2px;
+  }
+  .ex-btn:hover { background: var(--accent2); color: #fff; }
 
   /* reference panel */
   .ref-panel {
@@ -268,29 +297,16 @@
         <div class="result-box"><span class="result-label">F ($)</span><span class="result-value pending" id="fp_result">—</span></div>
       </div>
       <div class="diagram-side">
-        <svg viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="inherit" stroke-width="1.5"/></marker>
-  <marker id="ahb" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#2563eb" stroke-width="1.5"/></marker></defs>
-  <!-- timeline -->
-  <line x1="20" y1="62" x2="185" y2="62" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ah)" style="marker:url(#ah);stroke:#9ca3af"/>
-  <!-- tick marks -->
-  <line x1="30" y1="58" x2="30" y2="66" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="170" y1="58" x2="170" y2="66" stroke="#9ca3af" stroke-width="1.2"/>
-  <!-- P arrow down at t=0 -->
-  <line x1="30" y1="62" x2="30" y2="90" stroke="#00a880" stroke-width="2.2" marker-end="url(#ah)" style="stroke:#00a880"/>
-  <!-- F arrow up at t=N -->
-  <line x1="170" y1="62" x2="170" y2="22" stroke="#2563eb" stroke-width="2.2" marker-end="url(#ahb)" style="stroke:#2563eb"/>
-  <!-- arc -->
-  <path d="M30 56 Q100 18 170 56" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 3"/>
-  <!-- labels -->
-  <text x="30" y="104" font-family="monospace" font-size="11" fill="#00a880" text-anchor="middle">P</text>
-  <text x="170" y="17" font-family="monospace" font-size="11" fill="#2563eb" text-anchor="middle">F</text>
-  <text x="30" y="75" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
-  <text x="170" y="75" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">N</text>
-  <text x="100" y="14" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">(1+i)ᴺ</text>
-</svg>
-        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#00a880"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#2563eb"></span>Find</span></div>
+        <div class="cf" id="cf_fp"></div>
+        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#FFBF00"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#022851"></span>Find</span></div>
       </div>
+    </div>
+    <div class="example">
+      <div class="ex-title">Example · Savings goal</div>
+      <p><b>When to use:</b> A single lump sum is invested today and left to grow. Typical for reserve funds, CDs, or escalating a past cost to a future date.</p>
+      <p><b>Problem:</b> A district invests $50,000 today at 5%/yr for 8 years. What will the fund be worth?</p>
+      <p class="ex-ans">F = $73,872.77</p>
+      <button class="ex-btn" data-fn="calc_FP" data-vals="{&quot;fp_P&quot;: 50000, &quot;fp_i&quot;: 5, &quot;fp_N&quot;: 8}">Load example</button>
     </div>
   </div>
 
@@ -308,25 +324,16 @@
         <div class="result-box"><span class="result-label">P ($)</span><span class="result-value pending" id="pf_result">—</span></div>
       </div>
       <div class="diagram-side">
-        <svg viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="ah2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#9ca3af" stroke-width="1.5"/></marker>
-  <marker id="ahg2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#00a880" stroke-width="1.5"/></marker>
-  <marker id="ahb2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#2563eb" stroke-width="1.5"/></marker></defs>
-  <line x1="20" y1="62" x2="185" y2="62" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ah2)"/>
-  <line x1="30" y1="58" x2="30" y2="66" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="170" y1="58" x2="170" y2="66" stroke="#9ca3af" stroke-width="1.2"/>
-  <!-- F given at N (down arrow = you receive it, convention: receipt up) -->
-  <line x1="170" y1="62" x2="170" y2="24" stroke="#00a880" stroke-width="2.2" marker-end="url(#ahg2)" style="stroke:#00a880"/>
-  <!-- P find at 0 (down arrow = you pay it now) -->
-  <line x1="30" y1="62" x2="30" y2="90" stroke="#2563eb" stroke-width="2.2" marker-end="url(#ahb2)" style="stroke:#2563eb"/>
-  <path d="M170 56 Q100 18 30 56" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 3"/>
-  <text x="170" y="18" font-family="monospace" font-size="11" fill="#00a880" text-anchor="middle">F</text>
-  <text x="30" y="104" font-family="monospace" font-size="11" fill="#2563eb" text-anchor="middle">P</text>
-  <text x="30" y="75" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
-  <text x="170" y="75" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">N</text>
-</svg>
-        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#00a880"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#2563eb"></span>Find</span></div>
+        <div class="cf" id="cf_pf"></div>
+        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#FFBF00"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#022851"></span>Find</span></div>
       </div>
+    </div>
+    <div class="example">
+      <div class="ex-title">Example · Future obligation</div>
+      <p><b>When to use:</b> You know a future lump sum and need its equivalent today, e.g. to compare options or decide how much to set aside now.</p>
+      <p><b>Problem:</b> A pump overhaul costing $200,000 is due in 10 years. At 7%/yr, how much must be set aside today?</p>
+      <p class="ex-ans">P = $101,669.86</p>
+      <button class="ex-btn" data-fn="calc_PF" data-vals="{&quot;pf_F&quot;: 200000, &quot;pf_i&quot;: 7, &quot;pf_N&quot;: 10}">Load example</button>
     </div>
   </div>
 
@@ -344,34 +351,16 @@
         <div class="result-box"><span class="result-label">P ($)</span><span class="result-value pending" id="pa_result">—</span></div>
       </div>
       <div class="diagram-side">
-        <svg viewBox="0 0 220 115" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="ah5" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#9ca3af" stroke-width="1.5"/></marker>
-  <marker id="ahg5" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#00a880" stroke-width="1.5"/></marker>
-  <marker id="ahb5" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#2563eb" stroke-width="1.5"/></marker></defs>
-  <line x1="15" y1="58" x2="205" y2="58" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ah5)"/>
-  <line x1="25" y1="54" x2="25" y2="62" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="60" y1="54" x2="60" y2="62" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="95" y1="54" x2="95" y2="62" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="130" y1="54" x2="130" y2="62" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="160" y1="54" x2="160" y2="62" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="190" y1="54" x2="190" y2="62" stroke="#9ca3af" stroke-width="1.2"/>
-  <!-- A up arrows at 1..N -->
-  <line x1="60" y1="58" x2="60" y2="28" stroke="#00a880" stroke-width="2" marker-end="url(#ahg5)" style="stroke:#00a880"/>
-  <line x1="95" y1="58" x2="95" y2="28" stroke="#00a880" stroke-width="2" marker-end="url(#ahg5)" style="stroke:#00a880"/>
-  <line x1="130" y1="58" x2="130" y2="28" stroke="#00a880" stroke-width="2" marker-end="url(#ahg5)" style="stroke:#00a880"/>
-  <text x="152" y="42" font-family="monospace" font-size="9" fill="#9ca3af">···</text>
-  <line x1="190" y1="58" x2="190" y2="28" stroke="#00a880" stroke-width="2" marker-end="url(#ahg5)" style="stroke:#00a880"/>
-  <!-- P down at 0 -->
-  <line x1="25" y1="58" x2="25" y2="90" stroke="#2563eb" stroke-width="2.5" marker-end="url(#ahb5)" style="stroke:#2563eb"/>
-  <text x="25" y="72" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
-  <text x="60" y="72" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">1</text>
-  <text x="95" y="72" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">2</text>
-  <text x="190" y="72" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">N</text>
-  <text x="72" y="23" font-family="monospace" font-size="10" fill="#00a880" text-anchor="middle">A</text>
-  <text x="25" y="105" font-family="monospace" font-size="11" fill="#2563eb" text-anchor="middle">P</text>
-</svg>
-        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#00a880"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#2563eb"></span>Find</span></div>
+        <div class="cf" id="cf_pa"></div>
+        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#FFBF00"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#022851"></span>Find</span></div>
       </div>
+    </div>
+    <div class="example">
+      <div class="ex-title">Example · Investment justification</div>
+      <p><b>When to use:</b> A project produces equal annual savings or revenue. This gives the most you can pay up front and still break even.</p>
+      <p><b>Problem:</b> An efficiency retrofit saves $30,000/yr for 8 years. At a 10% MARR, what is the maximum justified investment?</p>
+      <p class="ex-ans">P = $160,047.79</p>
+      <button class="ex-btn" data-fn="calc_PA" data-vals="{&quot;pa_A&quot;: 30000, &quot;pa_i&quot;: 10, &quot;pa_N&quot;: 8}">Load example</button>
     </div>
   </div>
 
@@ -389,33 +378,16 @@
         <div class="result-box"><span class="result-label">A ($)</span><span class="result-value pending" id="ap_result">—</span></div>
       </div>
       <div class="diagram-side">
-        <svg viewBox="0 0 220 115" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="ah6" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#9ca3af" stroke-width="1.5"/></marker>
-  <marker id="ahg6" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#00a880" stroke-width="1.5"/></marker>
-  <marker id="ahb6" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#2563eb" stroke-width="1.5"/></marker></defs>
-  <line x1="15" y1="58" x2="205" y2="58" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ah6)"/>
-  <line x1="25" y1="54" x2="25" y2="62" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="60" y1="54" x2="60" y2="62" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="95" y1="54" x2="95" y2="62" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="130" y1="54" x2="130" y2="62" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="190" y1="54" x2="190" y2="62" stroke="#9ca3af" stroke-width="1.2"/>
-  <!-- P given at 0 (up = you receive loan) -->
-  <line x1="25" y1="58" x2="25" y2="20" stroke="#00a880" stroke-width="2.5" marker-end="url(#ahg6)" style="stroke:#00a880"/>
-  <!-- A down at 1..N (payments) -->
-  <line x1="60" y1="58" x2="60" y2="90" stroke="#2563eb" stroke-width="2" marker-end="url(#ahb6)" style="stroke:#2563eb"/>
-  <line x1="95" y1="58" x2="95" y2="90" stroke="#2563eb" stroke-width="2" marker-end="url(#ahb6)" style="stroke:#2563eb"/>
-  <line x1="130" y1="58" x2="130" y2="90" stroke="#2563eb" stroke-width="2" marker-end="url(#ahb6)" style="stroke:#2563eb"/>
-  <text x="155" y="80" font-family="monospace" font-size="9" fill="#9ca3af">···</text>
-  <line x1="190" y1="58" x2="190" y2="90" stroke="#2563eb" stroke-width="2" marker-end="url(#ahb6)" style="stroke:#2563eb"/>
-  <text x="25" y="72" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
-  <text x="60" y="72" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">1</text>
-  <text x="95" y="72" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">2</text>
-  <text x="190" y="72" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">N</text>
-  <text x="25" y="14" font-family="monospace" font-size="11" fill="#00a880" text-anchor="middle">P</text>
-  <text x="72" y="105" font-family="monospace" font-size="10" fill="#2563eb" text-anchor="middle">A</text>
-</svg>
-        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#00a880"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#2563eb"></span>Find</span></div>
+        <div class="cf" id="cf_ap"></div>
+        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#FFBF00"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#022851"></span>Find</span></div>
       </div>
+    </div>
+    <div class="example">
+      <div class="ex-title">Example · Loan payment</div>
+      <p><b>When to use:</b> Convert an up-front cost or loan into an equal annual cost (annualized cost, loan repayment, equipment comparison over unequal lives).</p>
+      <p><b>Problem:</b> A $400,000 loan at 8%/yr is repaid over 10 years in equal payments. What is the annual payment?</p>
+      <p class="ex-ans">A = $59,611.80</p>
+      <button class="ex-btn" data-fn="calc_AP" data-vals="{&quot;ap_P&quot;: 400000, &quot;ap_i&quot;: 8, &quot;ap_N&quot;: 10}">Load example</button>
     </div>
   </div>
 
@@ -433,37 +405,16 @@
         <div class="result-box"><span class="result-label">F ($)</span><span class="result-value pending" id="fa_result">—</span></div>
       </div>
       <div class="diagram-side">
-        <svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="ah3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#9ca3af" stroke-width="1.5"/></marker>
-  <marker id="ahg3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#00a880" stroke-width="1.5"/></marker>
-  <marker id="ahb3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#2563eb" stroke-width="1.5"/></marker></defs>
-  <line x1="15" y1="68" x2="205" y2="68" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ah3)"/>
-  <!-- ticks at 0,1,2,3,N-1,N -->
-  <line x1="25" y1="64" x2="25" y2="72" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="60" y1="64" x2="60" y2="72" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="95" y1="64" x2="95" y2="72" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="130" y1="64" x2="130" y2="72" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="160" y1="64" x2="160" y2="72" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="190" y1="64" x2="190" y2="72" stroke="#9ca3af" stroke-width="1.2"/>
-  <!-- A arrows up at 1,2,3,...N -->
-  <line x1="60" y1="68" x2="60" y2="38" stroke="#00a880" stroke-width="2" marker-end="url(#ahg3)" style="stroke:#00a880"/>
-  <line x1="95" y1="68" x2="95" y2="38" stroke="#00a880" stroke-width="2" marker-end="url(#ahg3)" style="stroke:#00a880"/>
-  <line x1="130" y1="68" x2="130" y2="38" stroke="#00a880" stroke-width="2" marker-end="url(#ahg3)" style="stroke:#00a880"/>
-  <text x="147" y="50" font-family="monospace" font-size="9" fill="#9ca3af">···</text>
-  <line x1="190" y1="68" x2="190" y2="38" stroke="#00a880" stroke-width="2" marker-end="url(#ahg3)" style="stroke:#00a880"/>
-  <!-- F arrow up at N (taller) -->
-  <line x1="190" y1="68" x2="190" y2="14" stroke="#2563eb" stroke-width="2.5" marker-end="url(#ahb3)" style="stroke:#2563eb"/>
-  <!-- labels -->
-  <text x="25" y="82" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
-  <text x="60" y="82" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">1</text>
-  <text x="95" y="82" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">2</text>
-  <text x="130" y="82" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">3</text>
-  <text x="190" y="82" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">N</text>
-  <text x="72" y="33" font-family="monospace" font-size="10" fill="#00a880" text-anchor="middle">A</text>
-  <text x="190" y="9" font-family="monospace" font-size="11" fill="#2563eb" text-anchor="middle">F</text>
-</svg>
-        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#00a880"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#2563eb"></span>Find</span></div>
+        <div class="cf" id="cf_fa"></div>
+        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#FFBF00"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#022851"></span>Find</span></div>
       </div>
+    </div>
+    <div class="example">
+      <div class="ex-title">Example · Equipment replacement fund</div>
+      <p><b>When to use:</b> Equal periodic deposits accumulate interest. Use it to find the balance at the end of the deposit period.</p>
+      <p><b>Problem:</b> $12,000 is deposited at the end of each year for 10 years at 6%/yr. What is the balance after the last deposit?</p>
+      <p class="ex-ans">F = $158,169.54</p>
+      <button class="ex-btn" data-fn="calc_FA" data-vals="{&quot;fa_A&quot;: 12000, &quot;fa_i&quot;: 6, &quot;fa_N&quot;: 10}">Load example</button>
     </div>
   </div>
 
@@ -481,33 +432,16 @@
         <div class="result-box"><span class="result-label">A ($)</span><span class="result-value pending" id="af_result">—</span></div>
       </div>
       <div class="diagram-side">
-        <svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="ah4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#9ca3af" stroke-width="1.5"/></marker>
-  <marker id="ahg4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#00a880" stroke-width="1.5"/></marker>
-  <marker id="ahb4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#2563eb" stroke-width="1.5"/></marker></defs>
-  <line x1="15" y1="62" x2="205" y2="62" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ah4)"/>
-  <line x1="25" y1="58" x2="25" y2="66" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="60" y1="58" x2="60" y2="66" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="95" y1="58" x2="95" y2="66" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="130" y1="58" x2="130" y2="66" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="190" y1="58" x2="190" y2="66" stroke="#9ca3af" stroke-width="1.2"/>
-  <!-- F given at N (up = you receive it) -->
-  <line x1="190" y1="62" x2="190" y2="18" stroke="#00a880" stroke-width="2.5" marker-end="url(#ahg4)" style="stroke:#00a880"/>
-  <!-- A find — down arrows at 1..N -->
-  <line x1="60" y1="62" x2="60" y2="88" stroke="#2563eb" stroke-width="2" marker-end="url(#ahb4)" style="stroke:#2563eb"/>
-  <line x1="95" y1="62" x2="95" y2="88" stroke="#2563eb" stroke-width="2" marker-end="url(#ahb4)" style="stroke:#2563eb"/>
-  <line x1="130" y1="62" x2="130" y2="88" stroke="#2563eb" stroke-width="2" marker-end="url(#ahb4)" style="stroke:#2563eb"/>
-  <text x="155" y="80" font-family="monospace" font-size="9" fill="#9ca3af">···</text>
-  <line x1="190" y1="62" x2="190" y2="88" stroke="#2563eb" stroke-width="2" marker-end="url(#ahb4)" style="stroke:#2563eb"/>
-  <text x="25" y="78" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
-  <text x="60" y="78" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">1</text>
-  <text x="95" y="78" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">2</text>
-  <text x="190" y="78" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">N</text>
-  <text x="190" y="12" font-family="monospace" font-size="11" fill="#00a880" text-anchor="middle">F</text>
-  <text x="72" y="103" font-family="monospace" font-size="10" fill="#2563eb" text-anchor="middle">A</text>
-</svg>
-        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#00a880"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#2563eb"></span>Find</span></div>
+        <div class="cf" id="cf_af"></div>
+        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#FFBF00"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#022851"></span>Find</span></div>
       </div>
+    </div>
+    <div class="example">
+      <div class="ex-title">Example · Sinking fund</div>
+      <p><b>When to use:</b> You have a target amount at a future date and need the equal periodic deposit that reaches it.</p>
+      <p><b>Problem:</b> A reservoir liner must be replaced in 15 years for $500,000. At 5%/yr, what annual deposit is needed?</p>
+      <p class="ex-ans">A = $23,171.14</p>
+      <button class="ex-btn" data-fn="calc_AF" data-vals="{&quot;af_F&quot;: 500000, &quot;af_i&quot;: 5, &quot;af_N&quot;: 15}">Load example</button>
     </div>
   </div>
 
@@ -525,37 +459,16 @@
         <div class="result-box"><span class="result-label">P ($)</span><span class="result-value pending" id="pg_result">—</span></div>
       </div>
       <div class="diagram-side">
-        <svg viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="ah7" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#9ca3af" stroke-width="1.5"/></marker>
-  <marker id="ahg7" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#d97706" stroke-width="1.5"/></marker>
-  <marker id="ahb7" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#2563eb" stroke-width="1.5"/></marker></defs>
-  <line x1="15" y1="72" x2="205" y2="72" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ah7)"/>
-  <line x1="25" y1="68" x2="25" y2="76" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="60" y1="68" x2="60" y2="76" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="95" y1="68" x2="95" y2="76" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="130" y1="68" x2="130" y2="76" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="190" y1="68" x2="190" y2="76" stroke="#9ca3af" stroke-width="1.2"/>
-  <!-- period 1 = 0 (no arrow), period 2 = G, period 3 = 2G, N = (N-1)G -->
-  <line x1="95" y1="72" x2="95" y2="52" stroke="#d97706" stroke-width="2" marker-end="url(#ahg7)" style="stroke:#d97706"/>
-  <line x1="130" y1="72" x2="130" y2="36" stroke="#d97706" stroke-width="2" marker-end="url(#ahg7)" style="stroke:#d97706"/>
-  <text x="157" y="48" font-family="monospace" font-size="9" fill="#9ca3af">···</text>
-  <line x1="190" y1="72" x2="190" y2="18" stroke="#d97706" stroke-width="2" marker-end="url(#ahg7)" style="stroke:#d97706"/>
-  <!-- P down at 0 -->
-  <line x1="25" y1="72" x2="25" y2="100" stroke="#2563eb" stroke-width="2.5" marker-end="url(#ahb7)" style="stroke:#2563eb"/>
-  <!-- labels -->
-  <text x="25" y="85" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
-  <text x="60" y="85" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">1</text>
-  <text x="95" y="85" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">2</text>
-  <text x="130" y="85" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">3</text>
-  <text x="190" y="85" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">N</text>
-  <text x="60" y="68" font-family="monospace" font-size="8" fill="#9ca3af" text-anchor="middle">0</text>
-  <text x="95" y="47" font-family="monospace" font-size="9" fill="#d97706" text-anchor="middle">G</text>
-  <text x="130" y="31" font-family="monospace" font-size="9" fill="#d97706" text-anchor="middle">2G</text>
-  <text x="190" y="13" font-family="monospace" font-size="9" fill="#d97706" text-anchor="middle">(N-1)G</text>
-  <text x="25" y="114" font-family="monospace" font-size="11" fill="#2563eb" text-anchor="middle">P</text>
-</svg>
-        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#d97706"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#2563eb"></span>Find</span></div>
+        <div class="cf" id="cf_pg"></div>
+        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#3b73b9"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#022851"></span>Find</span></div>
       </div>
+    </div>
+    <div class="example">
+      <div class="ex-title">Example · Growing maintenance cost</div>
+      <p><b>When to use:</b> A cost rises by a fixed dollar amount each year (aging equipment). P/G gives the present worth of the increasing part only; add the base cost separately with P/A.</p>
+      <p><b>Problem:</b> Maintenance is $0 extra in year 1, then rises $2,000 each year through year 10. At 8%/yr, what is the present worth of the gradient?</p>
+      <p class="ex-ans">P = $51,953.66</p>
+      <button class="ex-btn" data-fn="calc_PG" data-vals="{&quot;pg_G&quot;: 2000, &quot;pg_i&quot;: 8, &quot;pg_N&quot;: 10}">Load example</button>
     </div>
   </div>
 
@@ -573,35 +486,16 @@
         <div class="result-box"><span class="result-label">A ($)</span><span class="result-value pending" id="ag_result">—</span></div>
       </div>
       <div class="diagram-side">
-        <svg viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="ah8" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#9ca3af" stroke-width="1.5"/></marker>
-  <marker id="ahg8" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#d97706" stroke-width="1.5"/></marker>
-  <marker id="ahb8" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#2563eb" stroke-width="1.5"/></marker></defs>
-  <line x1="15" y1="68" x2="205" y2="68" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ah8)"/>
-  <line x1="25" y1="64" x2="25" y2="72" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="60" y1="64" x2="60" y2="72" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="95" y1="64" x2="95" y2="72" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="130" y1="64" x2="130" y2="72" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="190" y1="64" x2="190" y2="72" stroke="#9ca3af" stroke-width="1.2"/>
-  <!-- gradient inputs -->
-  <line x1="95" y1="68" x2="95" y2="48" stroke="#d97706" stroke-width="2" marker-end="url(#ahg8)" style="stroke:#d97706"/>
-  <line x1="130" y1="68" x2="130" y2="32" stroke="#d97706" stroke-width="2" marker-end="url(#ahg8)" style="stroke:#d97706"/>
-  <text x="157" y="44" font-family="monospace" font-size="9" fill="#9ca3af">···</text>
-  <line x1="190" y1="68" x2="190" y2="14" stroke="#d97706" stroke-width="2" marker-end="url(#ahg8)" style="stroke:#d97706"/>
-  <!-- equal A output arrows (shown dashed-blue below line) -->
-  <line x1="60" y1="68" x2="60" y2="92" stroke="#2563eb" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#ahb8)" style="stroke:#2563eb"/>
-  <line x1="95" y1="68" x2="95" y2="92" stroke="#2563eb" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#ahb8)" style="stroke:#2563eb"/>
-  <line x1="130" y1="68" x2="130" y2="92" stroke="#2563eb" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#ahb8)" style="stroke:#2563eb"/>
-  <line x1="190" y1="68" x2="190" y2="92" stroke="#2563eb" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#ahb8)" style="stroke:#2563eb"/>
-  <text x="25" y="82" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
-  <text x="60" y="82" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">1</text>
-  <text x="95" y="43" font-family="monospace" font-size="9" fill="#d97706" text-anchor="middle">G</text>
-  <text x="130" y="27" font-family="monospace" font-size="9" fill="#d97706" text-anchor="middle">2G</text>
-  <text x="190" y="9" font-family="monospace" font-size="9" fill="#d97706" text-anchor="middle">(N-1)G</text>
-  <text x="72" y="107" font-family="monospace" font-size="10" fill="#2563eb" text-anchor="middle">A</text>
-</svg>
-        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#d97706"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#2563eb"></span>Find</span></div>
+        <div class="cf" id="cf_ag"></div>
+        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#3b73b9"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#022851"></span>Find</span></div>
       </div>
+    </div>
+    <div class="example">
+      <div class="ex-title">Example · Level annual cost</div>
+      <p><b>When to use:</b> Convert the same linearly increasing series into an equal annual amount, so it can be added to a base cost and compared with alternatives.</p>
+      <p><b>Problem:</b> Same case: costs rise $2,000/yr over 10 years at 8%/yr. What equal annual amount is equivalent to the gradient?</p>
+      <p class="ex-ans">A = $7,742.63 per year</p>
+      <button class="ex-btn" data-fn="calc_AG" data-vals="{&quot;ag_G&quot;: 2000, &quot;ag_i&quot;: 8, &quot;ag_N&quot;: 10}">Load example</button>
     </div>
   </div>
 
@@ -620,37 +514,16 @@
         <div class="result-box"><span class="result-label">P ($)</span><span class="result-value pending" id="geo_result">—</span></div>
       </div>
       <div class="diagram-side">
-        <svg viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
-  <defs><marker id="ah9" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#9ca3af" stroke-width="1.5"/></marker>
-  <marker id="ahg9" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#d97706" stroke-width="1.5"/></marker>
-  <marker id="ahb9" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1l6 3-6 3" fill="none" stroke="#2563eb" stroke-width="1.5"/></marker></defs>
-  <line x1="15" y1="72" x2="205" y2="72" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ah9)"/>
-  <line x1="25" y1="68" x2="25" y2="76" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="60" y1="68" x2="60" y2="76" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="95" y1="68" x2="95" y2="76" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="130" y1="68" x2="130" y2="76" stroke="#9ca3af" stroke-width="1.2"/>
-  <line x1="190" y1="68" x2="190" y2="76" stroke="#9ca3af" stroke-width="1.2"/>
-  <!-- A1 at t=1, A1(1+g) at t=2, A1(1+g)^2 at t=3, growing -->
-  <line x1="60" y1="72" x2="60" y2="54" stroke="#d97706" stroke-width="2" marker-end="url(#ahg9)" style="stroke:#d97706"/>
-  <line x1="95" y1="72" x2="95" y2="42" stroke="#d97706" stroke-width="2" marker-end="url(#ahg9)" style="stroke:#d97706"/>
-  <line x1="130" y1="72" x2="130" y2="28" stroke="#d97706" stroke-width="2" marker-end="url(#ahg9)" style="stroke:#d97706"/>
-  <text x="157" y="40" font-family="monospace" font-size="9" fill="#9ca3af">···</text>
-  <line x1="190" y1="72" x2="190" y2="12" stroke="#d97706" stroke-width="2" marker-end="url(#ahg9)" style="stroke:#d97706"/>
-  <!-- P down at 0 -->
-  <line x1="25" y1="72" x2="25" y2="100" stroke="#2563eb" stroke-width="2.5" marker-end="url(#ahb9)" style="stroke:#2563eb"/>
-  <!-- dashed growth line -->
-  <path d="M60 54 Q130 28 190 12" fill="none" stroke="#d97706" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
-  <text x="25" y="85" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
-  <text x="60" y="85" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">1</text>
-  <text x="95" y="85" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">2</text>
-  <text x="190" y="85" font-family="monospace" font-size="9" fill="#6b7280" text-anchor="middle">N</text>
-  <text x="60" y="49" font-family="monospace" font-size="9" fill="#d97706" text-anchor="middle">A₁</text>
-  <text x="98" y="37" font-family="monospace" font-size="8" fill="#d97706" text-anchor="middle">A₁(1+g)</text>
-  <text x="190" y="7" font-family="monospace" font-size="8" fill="#d97706" text-anchor="middle">A₁(1+g)ᴺ⁻¹</text>
-  <text x="25" y="114" font-family="monospace" font-size="11" fill="#2563eb" text-anchor="middle">P</text>
-</svg>
-        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#d97706"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#2563eb"></span>Find</span></div>
+        <div class="cf" id="cf_geo"></div>
+        <div class="diagram-legend"><span class="leg"><span class="leg-dot" style="background:#3b73b9"></span>Given</span><span class="leg"><span class="leg-dot" style="background:#022851"></span>Find</span></div>
       </div>
+    </div>
+    <div class="example">
+      <div class="ex-title">Example · Escalating energy cost</div>
+      <p><b>When to use:</b> A cost or benefit grows by a constant percentage each year (energy prices, inflation-indexed contracts). Enter first-year amount A1.</p>
+      <p><b>Problem:</b> Pumping energy costs $100,000 in year 1 and rises 4%/yr. With i = 8% over 10 years, what is the present worth?</p>
+      <p class="ex-ans">P = $785,901.22</p>
+      <button class="ex-btn" data-fn="calc_GEO" data-vals="{&quot;geo_A1&quot;: 100000, &quot;geo_g&quot;: 4, &quot;geo_i&quot;: 8, &quot;geo_N&quot;: 10}">Load example</button>
     </div>
   </div>
 
@@ -667,31 +540,133 @@
     const isRef = group === 'reference';
     document.getElementById('grid').style.display = isRef ? 'none' : '';
     document.getElementById('refPanel').classList.toggle('visible', isRef);
-    if (!isRef) {
-      document.querySelectorAll('.formula-card').forEach(c => {
-        c.classList.toggle('visible', group === 'all' || c.dataset.group === group);
-      });
-    }
+    if (!isRef) document.querySelectorAll('.formula-card').forEach(c => c.classList.toggle('visible', c.dataset.group === group));
   }
-  function fmt(v) { return v.toLocaleString('en-US', {minimumFractionDigits:4, maximumFractionDigits:4}); }
-  function set(id,v) { const el=document.getElementById(id); el.textContent=fmt(v); el.className='result-value'; }
-  function err(id,m) { const el=document.getElementById(id); el.textContent=m; el.className='result-value error-val'; }
-  function g(id) { return parseFloat(document.getElementById(id).value); }
+  const fmt = v => v.toLocaleString('en-US', {minimumFractionDigits:4, maximumFractionDigits:4});
+  const g = id => parseFloat(document.getElementById(id).value);
+  const bad = a => a.some(isNaN);
+  const pw = Math.pow;
+  function setRes(id, v) { const el = document.getElementById(id); el.textContent = fmt(v); el.className = 'result-value'; }
+  function errRes(id, m) { const el = document.getElementById(id); el.textContent = m; el.className = 'result-value error-val'; }
+  function pendRes(id) { const el = document.getElementById(id); el.textContent = '—'; el.className = 'result-value pending'; }
 
-  function calc_FP() { const P=g('fp_P'),i=g('fp_i')/100,N=g('fp_N'); if([P,i,N].some(isNaN)||N<1) return err('fp_result','Invalid'); set('fp_result',P*Math.pow(1+i,N)); }
-  function calc_PF() { const F=g('pf_F'),i=g('pf_i')/100,N=g('pf_N'); if([F,i,N].some(isNaN)||N<1) return err('pf_result','Invalid'); set('pf_result',F/Math.pow(1+i,N)); }
-  function calc_PA() { const A=g('pa_A'),i=g('pa_i')/100,N=g('pa_N'); if([A,i,N].some(isNaN)||N<1||i<=0) return err('pa_result','Invalid'); set('pa_result',A*(Math.pow(1+i,N)-1)/(i*Math.pow(1+i,N))); }
-  function calc_AP() { const P=g('ap_P'),i=g('ap_i')/100,N=g('ap_N'); if([P,i,N].some(isNaN)||N<1||i<=0) return err('ap_result','Invalid'); set('ap_result',P*(i*Math.pow(1+i,N))/(Math.pow(1+i,N)-1)); }
-  function calc_FA() { const A=g('fa_A'),i=g('fa_i')/100,N=g('fa_N'); if([A,i,N].some(isNaN)||N<1||i<=0) return err('fa_result','Invalid'); set('fa_result',A*(Math.pow(1+i,N)-1)/i); }
-  function calc_AF() { const F=g('af_F'),i=g('af_i')/100,N=g('af_N'); if([F,i,N].some(isNaN)||N<1||i<=0) return err('af_result','Invalid'); set('af_result',F*i/(Math.pow(1+i,N)-1)); }
-  function calc_PG() { const G=g('pg_G'),i=g('pg_i')/100,N=g('pg_N'); if([G,i,N].some(isNaN)||N<1||i<=0) return err('pg_result','Invalid'); set('pg_result',G*(Math.pow(1+i,N)-i*N-1)/(i*i*Math.pow(1+i,N))); }
-  function calc_AG() { const G=g('ag_G'),i=g('ag_i')/100,N=g('ag_N'); if([G,i,N].some(isNaN)||N<1||i<=0) return err('ag_result','Invalid'); set('ag_result',G*(1/i-N/(Math.pow(1+i,N)-1))); }
-  function calc_GEO() {
-    const A1=g('geo_A1'),gr=g('geo_g')/100,i=g('geo_i')/100,N=g('geo_N');
-    if([A1,gr,i,N].some(isNaN)||N<1) return err('geo_result','Invalid');
-    const P=Math.abs(gr-i)<1e-12 ? A1*N/(1+i) : A1*(1-Math.pow(1+gr,N)*Math.pow(1+i,-N))/(i-gr);
-    set('geo_result',P);
+  // ---- pure calculations (null = invalid input) ----
+  const F = {
+    fp:  () => { const P=g('fp_P'),i=g('fp_i')/100,N=g('fp_N'); return bad([P,i,N])||N<1 ? null : P*pw(1+i,N); },
+    pf:  () => { const f=g('pf_F'),i=g('pf_i')/100,N=g('pf_N'); return bad([f,i,N])||N<1 ? null : f/pw(1+i,N); },
+    pa:  () => { const A=g('pa_A'),i=g('pa_i')/100,N=g('pa_N'); return bad([A,i,N])||N<1||i<=0 ? null : A*(pw(1+i,N)-1)/(i*pw(1+i,N)); },
+    ap:  () => { const P=g('ap_P'),i=g('ap_i')/100,N=g('ap_N'); return bad([P,i,N])||N<1||i<=0 ? null : P*(i*pw(1+i,N))/(pw(1+i,N)-1); },
+    fa:  () => { const A=g('fa_A'),i=g('fa_i')/100,N=g('fa_N'); return bad([A,i,N])||N<1||i<=0 ? null : A*(pw(1+i,N)-1)/i; },
+    af:  () => { const f=g('af_F'),i=g('af_i')/100,N=g('af_N'); return bad([f,i,N])||N<1||i<=0 ? null : f*i/(pw(1+i,N)-1); },
+    pg:  () => { const G=g('pg_G'),i=g('pg_i')/100,N=g('pg_N'); return bad([G,i,N])||N<1||i<=0 ? null : G*(pw(1+i,N)-i*N-1)/(i*i*pw(1+i,N)); },
+    ag:  () => { const G=g('ag_G'),i=g('ag_i')/100,N=g('ag_N'); return bad([G,i,N])||N<1||i<=0 ? null : G*(1/i-N/(pw(1+i,N)-1)); },
+    geo: () => { const A1=g('geo_A1'),r=g('geo_g')/100,i=g('geo_i')/100,N=g('geo_N');
+                 if (bad([A1,r,i,N])||N<1) return null;
+                 return Math.abs(r-i)<1e-12 ? A1*N/(1+i) : A1*(1-pw(1+r,N)*pw(1+i,-N))/(i-r); }
+  };
+  const done = {};
+
+  // ---- diagram helpers ----
+  function money(v) {
+    const a = Math.abs(v);
+    if (a >= 1e6) return '$' + (a/1e6).toFixed(2).replace(/\.?0+$/,'') + 'M';
+    if (a >= 1e5) return '$' + Math.round(a/1e3) + 'k';
+    if (a >= 1e3) return '$' + Math.round(a).toLocaleString('en-US');
+    return '$' + Number(a.toFixed(2));
   }
+  const nInt = id => Math.max(1, Math.round(g(id)));
+  const shown = N => N <= 10 ? Array.from({length:N+1}, (_,k)=>k) : [0,1,2,3,null,N-1,N];
+  const res = (r,k) => done[k] ? money(r) : '?';
+  const COL = {given:'#FFBF00', find:'#022851', grad:'#3b73b9', dash:'#022851'};
+  const TXT = {given:'#8a6a00', find:'#022851', grad:'#2a5d9a', dash:'#022851'};
+
+  const D = {
+    fp(r){ const P=g('fp_P'),N=nInt('fp_N'); return {N, i:g('fp_i'), items:[
+      {t:0,v:-P,role:'given',txt:'P '+money(P)}, {t:N,v:r,role:'find',txt:'F '+res(r,'fp')}]}; },
+    pf(r){ const f=g('pf_F'),N=nInt('pf_N'); return {N, i:g('pf_i'), items:[
+      {t:0,v:-r,role:'find',txt:'P '+res(r,'pf')}, {t:N,v:f,role:'given',txt:'F '+money(f)}]}; },
+    fa(r){ const A=g('fa_A'),N=nInt('fa_N'); const L=shown(N);
+      const it = L.filter(t=>t!==null&&t>=1).map(t=>({t,v:-A,role:'given',txt:t===1?'A '+money(A):''}));
+      it.push({t:N,v:r,role:'find',txt:'F '+res(r,'fa')}); return {N, i:g('fa_i'), items:it}; },
+    af(r){ const f=g('af_F'),N=nInt('af_N'); const L=shown(N);
+      const it = L.filter(t=>t!==null&&t>=1).map(t=>({t,v:-r,role:'find',txt:t===1?'A '+res(r,'af'):''}));
+      it.push({t:N,v:f,role:'given',txt:'F '+money(f)}); return {N, i:g('af_i'), items:it}; },
+    pa(r){ const A=g('pa_A'),N=nInt('pa_N'); const L=shown(N);
+      const it = [{t:0,v:-r,role:'find',txt:'P '+res(r,'pa')}];
+      L.filter(t=>t!==null&&t>=1).forEach(t=>it.push({t,v:A,role:'given',txt:t===1?'A '+money(A):''})); return {N, i:g('pa_i'), items:it}; },
+    ap(r){ const P=g('ap_P'),N=nInt('ap_N'); const L=shown(N);
+      const it = [{t:0,v:-P,role:'given',txt:'P '+money(P)}];
+      L.filter(t=>t!==null&&t>=1).forEach(t=>it.push({t,v:r,role:'find',txt:t===1?'A '+res(r,'ap'):''})); return {N, i:g('ap_i'), items:it}; },
+    pg(r){ const G=g('pg_G'),N=nInt('pg_N'); const L=shown(N); const last=N;
+      const it = [{t:0,v:-r,role:'find',txt:'P '+res(r,'pg')}];
+      L.filter(t=>t!==null&&t>=1).forEach(t=>it.push({t,v:(t-1)*G,role:'grad',
+        txt: t===2?'G '+money(G) : (t===last&&t>2?'(N−1)G '+money((t-1)*G):'')})); return {N, i:g('pg_i'), items:it}; },
+    ag(r){ const G=g('ag_G'),N=nInt('ag_N'); const L=shown(N); const last=N; const it=[];
+      L.filter(t=>t!==null&&t>=1).forEach(t=>{
+        it.push({t,v:(t-1)*G,role:'grad',txt: t===2?'G '+money(G) : (t===last&&t>2?'(N−1)G '+money((t-1)*G):'')});
+        it.push({t,v:-r,role:'dash',txt:t===1?'A '+res(r,'ag'):''}); });
+      return {N, i:g('ag_i'), items:it}; },
+    geo(r){ const A1=g('geo_A1'),gr=g('geo_g')/100,N=nInt('geo_N'); const L=shown(N); const last=N;
+      const it = [{t:0,v:-r,role:'find',txt:'P '+res(r,'geo')}];
+      L.filter(t=>t!==null&&t>=1).forEach(t=>{ const v=A1*pw(1+gr,t-1);
+        it.push({t,v,role:'grad',txt: t===1?'A₁ '+money(v) : (t===last?money(v):'')}); });
+      return {N, i:g('geo_i'), g:g('geo_g'), items:it}; }
+  };
+
+  function render(key) {
+    const box = document.getElementById('cf_'+key);
+    const r = F[key]();
+    if (r === null) { box.innerHTML = '<div class="cf-msg">Enter valid inputs</div>'; return; }
+    const d = D[key](r);
+    const L = shown(d.N), n = L.length, W = 320, X0 = 30, X1 = 290, Y = 105;
+    const xOf = t => X0 + L.indexOf(t) * (X1-X0)/(n-1);
+    const maxA = Math.max(...d.items.map(o=>Math.abs(o.v)), 1e-9);
+    let s = `<svg viewBox="0 0 ${W} 212" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, monospace">`;
+    s += `<text x="6" y="12" font-size="9.5" fill="#6b7280">i = ${d.i}%${d.g!==undefined?'   g = '+d.g+'%':''}   N = ${d.N}</text>`;
+    s += `<line x1="8" y1="${Y}" x2="${W-6}" y2="${Y}" stroke="#9ca3af" stroke-width="1.5"/><polygon points="${W-6},${Y} ${W-13},${Y-3.5} ${W-13},${Y+3.5}" fill="#9ca3af"/>`;
+    L.forEach(t => {
+      if (t === null) { const x = X0 + L.indexOf(null)*(X1-X0)/(n-1); s += `<text x="${x}" y="${Y+4}" font-size="11" fill="#9ca3af" text-anchor="middle">···</text>`; return; }
+      const x = xOf(t);
+      s += `<line x1="${x}" y1="${Y-3}" x2="${x}" y2="${Y+3}" stroke="#9ca3af" stroke-width="1.2"/>`;
+      s += `<text x="${x}" y="206" font-size="9" fill="#6b7280" text-anchor="middle">${t===d.N&&d.N>2?'N':t}</text>`;
+    });
+    d.items.forEach(o => {
+      if (L.indexOf(o.t) < 0) return;
+      const x = xOf(o.t), up = o.v > 0;
+      if (Math.abs(o.v) < 1e-12) { s += `<text x="${x}" y="${Y-8}" font-size="8.5" fill="#9ca3af" text-anchor="middle">0</text>`; return; }
+      const h = 16 + 46*Math.abs(o.v)/maxA, tip = up ? Y-h : Y+h, base = up ? tip+8 : tip-8;
+      const c = COL[o.role], pend = o.role==='find' && !done[key];
+      const dash = o.role==='dash' ? ' stroke-dasharray="4 2"' : '';
+      s += `<g opacity="${pend?0.45:1}"><line x1="${x}" y1="${Y}" x2="${x}" y2="${base}" stroke="${c}" stroke-width="2.2"${dash}/>`;
+      s += `<polygon points="${x},${tip} ${x-4},${base} ${x+4},${base}" fill="${c}"/></g>`;
+      if (o.txt) {
+        const anchor = x > 250 ? 'end' : (x < 60 ? 'start' : 'middle'), tx = anchor==='end'? x+5 : (anchor==='start'? x-5 : x);
+        s += `<text x="${tx}" y="${up ? tip-5 : tip+13}" font-size="9.5" font-weight="600" fill="${TXT[o.role]}" text-anchor="${anchor}">${o.txt}</text>`;
+      }
+    });
+    s += '</svg><div class="cf-note">↑ receipt · ↓ payment · lengths indicative</div>';
+    box.innerHTML = s;
+  }
+
+  function run(key) {
+    const v = F[key]();
+    if (v === null) { errRes(key+'_result', 'Invalid'); done[key] = false; render(key); return; }
+    setRes(key+'_result', v); done[key] = true; render(key);
+  }
+  const calc_FP=()=>run('fp'), calc_PF=()=>run('pf'), calc_PA=()=>run('pa'), calc_AP=()=>run('ap'), calc_FA=()=>run('fa'),
+        calc_AF=()=>run('af'), calc_PG=()=>run('pg'), calc_AG=()=>run('ag'), calc_GEO=()=>run('geo');
+  Object.assign(window, {calc_FP,calc_PF,calc_PA,calc_AP,calc_FA,calc_AF,calc_PG,calc_AG,calc_GEO});
+
+  // any input edit -> diagram goes back to "?" until Calculate is pressed again
+  document.querySelectorAll('input[type=number]').forEach(inp => inp.addEventListener('input', () => {
+    const key = inp.id.split('_')[0]; done[key] = false; pendRes(key+'_result'); render(key);
+  }));
+  document.querySelectorAll('.ex-btn').forEach(b => b.addEventListener('click', () => {
+    const vals = JSON.parse(b.dataset.vals);
+    Object.entries(vals).forEach(([id, v]) => { document.getElementById(id).value = v; });
+    window[b.dataset.fn]();
+  }));
+  Object.keys(F).forEach(render);
 </script>
 </body>
 </html>
